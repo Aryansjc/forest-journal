@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Journal</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="text-editor.css">
+    <link rel="stylesheet" href="welcome-screen.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="journals-tab-panel" id="journals-tab">
+        <div class="tab-header">
+            <h2>My Journals</h2>
+            <button class="close-tab-btn" id="close-tab">×</button>
+        </div>
+        <div class="journals-list" id="journals-list">
+        </div>
+        <div class="tab-actions">
+            <input type="text" id="new-journal-name" placeholder="New journal name...">
+            <button id="create-new-journal">Create New</button>
+        </div>
+    </div>
+    <button class="leaf-tab-button" id="open-journals-tab">
+        <div class="leaf-icon"></div>
+    </button>
+    <div class="journal-container">
+        <div class="journal-header">
+            <h1 id="journal-title">My Web Journal</h1>
+            <div class="journal-title-edit">
+                <input type="text" id="journal-title-input" class="hidden" placeholder="Enter journal name...">
+                <button id="edit-title-btn" class="edit-title">✎</button>
+            </div>
+            <div class="date-display" id="current-date">May 10, 2025</div>
+        </div>
+        <div class="journal-navigation">
+            <button id="prev-page">Previous Spread</button>
+            <span id="page-number">Pages 1-2</span>
+            <button id="next-page">Next Spread</button>
+        </div>
+        <div class="journal-book">
+            <div class="journal-spine"></div>
+            <div class="journal-pages" id="journal-pages">
+                <div class="page-spread active" data-spread="1">
+                    <div class="journal-page left-page" data-page="1">
+                        <textarea placeholder="Write your thoughts on page 1..."></textarea>
+                        <div class="page-number">1</div>
+                    </div>
+                    <div class="journal-page right-page" data-page="2">
+                        <textarea placeholder="Write your thoughts on page 2..."></textarea>
+                        <div class="page-number">2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="journal-actions">
+            <button id="add-page">Add New Spread</button>
+            <button id="save-journal">Save Journal</button>
+            <button id="export-journal" class="secondary-btn">Export</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="cursor.js"></script>
+    <script src="magical-particles.js"></script>
+    <script src="journals.js"></script>
+    <script src="text-editor.js"></script>
+    <script src="welcome-tour.js"></script>
+    <script src="fix-prompts.js"></script>
+</body>
+</html>
