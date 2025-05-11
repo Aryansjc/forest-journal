@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function navigateToPrevSpread() {
         if (currentSpreadIndex > 1) {
             if ($('.page-spread.animating').length) return;
+            
+            // Play page turn sound if available
+            if (typeof window.playPageTurnSound === 'function') {
+                window.playPageTurnSound();
+            }
             const currentSpread = $(`.page-spread[data-spread="${currentSpreadIndex}"]`);
             const prevSpread = $(`.page-spread[data-spread="${currentSpreadIndex - 1}"]`);
             if (currentSpread.length && prevSpread.length) {
@@ -56,6 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function navigateToNextSpread() {
         if (currentSpreadIndex < totalSpreads) {
             if ($('.page-spread.animating').length) return;
+            
+            // Play page turn sound if available
+            if (typeof window.playPageTurnSound === 'function') {
+                window.playPageTurnSound();
+            }
             const currentSpread = $(`.page-spread[data-spread="${currentSpreadIndex}"]`);
             const nextSpread = $(`.page-spread[data-spread="${currentSpreadIndex + 1}"]`);
             if (currentSpread.length && nextSpread.length) {
@@ -96,6 +106,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function addNewSpread() {
         totalSpreads++;
+        
+        // Play page turn sound if available
+        if (typeof window.playPageTurnSound === 'function') {
+            window.playPageTurnSound();
+        }
         const newSpread = document.createElement('div');
         newSpread.className = 'page-spread';
         newSpread.dataset.spread = totalSpreads;

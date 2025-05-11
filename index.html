@@ -59,6 +59,7 @@
             <button id="add-page">Add New Spread</button>
             <button id="save-journal">Save Journal</button>
             <button id="export-journal" class="secondary-btn">Export</button>
+            <button id="toggle-sound" class="secondary-btn"><span class="sound-icon">🔊</span></button>
         </div>
     </div>
     <script src="script.js"></script>
@@ -68,5 +69,13 @@
     <script src="text-editor.js"></script>
     <script src="welcome-tour.js"></script>
     <script src="fix-prompts.js"></script>
+    <!-- Audio elements -->
+    <audio id="bg-audio" loop>
+        <source src="forest-ambience-296528.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="page-turn-audio" preload="auto">
+        <source src="pageturn-102978.mp3" type="audio/mpeg">
+    </audio>
+    <script src="audio-controller.js"></script>
 </body>
 </html>

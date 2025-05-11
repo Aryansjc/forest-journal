@@ -4,14 +4,30 @@ document.addEventListener('DOMContentLoaded', function() {
         showWelcomeScreen();
     }
     function showWelcomeScreen() {
+        // Hide the journal container first to prevent it from showing alongside welcome screen
+        const journalContainer = document.querySelector('.journal-container');
+        if (journalContainer) {
+            journalContainer.style.visibility = 'hidden';
+        }
+        
+        // Create welcome overlay that will cover the entire viewport
         const welcomeOverlay = document.createElement('div');
         welcomeOverlay.className = 'welcome-overlay';
+        welcomeOverlay.style.position = 'fixed';
+        welcomeOverlay.style.top = '0';
+        welcomeOverlay.style.left = '0';
+        welcomeOverlay.style.width = '100vw';
+        welcomeOverlay.style.height = '100vh';
+        
         const welcomeContent = document.createElement('div');
         welcomeContent.className = 'welcome-content';
         const leafTopLeft = document.createElement('div');
         leafTopLeft.className = 'welcome-decorator leaf-top-left';
         const leafBottomRight = document.createElement('div');
         leafBottomRight.className = 'welcome-decorator leaf-bottom-right';
+        
+        // Add fireflies to the welcome screen
+        createWelcomeFireflies(welcomeOverlay, 40);
         welcomeContent.innerHTML = `
             <h1 class="welcome-title">Whispers of the Forest</h1>
             <h2 class="welcome-subtitle">Your personal forest-themed journal</h2>
@@ -27,6 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
             welcomeOverlay.style.opacity = '0';
             setTimeout(function() {
                 welcomeOverlay.remove();
+                // Show the journal container again
+                const journalContainer = document.querySelector('.journal-container');
+                if (journalContainer) {
+                    journalContainer.style.visibility = 'visible';
+                }
                 localStorage.setItem('forest_journal_visited', 'true');
                 startGuidedTour();
             }, 800);
@@ -154,4 +175,102 @@ document.addEventListener('DOMContentLoaded', function() {
         addTourRestartButton();
     }
     window.startGuidedTour = startGuidedTour;
+    
+    // Function to create fireflies for the welcome screen
+    function createWelcomeFireflies(container, count) {
+        // Create the specified number of fireflies
+        for (let i = 0; i < count; i++) {
+            createWelcomeFirefly(container);
+        }
+        
+        // Occasionally add new fireflies for a dynamic effect
+        const intervalId = setInterval(() => {
+            // Only add more if the container is still in the document
+            if (!document.body.contains(container)) {
+                clearInterval(intervalId);
+                return;
+            }
+            
+            // Add new fireflies occasionally
+            if (Math.random() > 0.5 && container.querySelectorAll('.welcome-firefly').length < 60) {
+                createWelcomeFirefly(container);
+            }
+        }, 1000);
+    }
+    
+    // Create a single firefly element for the welcome screen
+    function createWelcomeFirefly(container) {
+        const firefly = document.createElement('div');
+        firefly.className = 'welcome-firefly';
+        
+        // Position randomly
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        firefly.style.left = `${posX}%`;
+        firefly.style.top = `${posY}%`;
+        
+        // Random size (slightly larger than regular fireflies)
+        const size = 2 + Math.random() * 4;
+        firefly.style.width = `${size}px`;
+        firefly.style.height = `${size}px`;
+        
+        // Create core and glow elements
+        const core = document.createElement('div');
+        core.className = 'welcome-firefly-core';
+        firefly.appendChild(core);
+        
+        const glow = document.createElement('div');
+        glow.className = 'welcome-firefly-glow';
+        firefly.appendChild(glow);
+        
+        // Set movement variables
+        const moveX = -50 + Math.random() * 100;
+        const moveY = -50 + Math.random() * 100;
+        firefly.style.setProperty('--x', `${moveX}px`);
+        firefly.style.setProperty('--y', `${moveY}px`);
+        
+        const moveX2 = -40 + Math.random() * 80;
+        const moveY2 = -40 + Math.random() * 80;
+        firefly.style.setProperty('--x2', `${moveX2}px`);
+        firefly.style.setProperty('--y2', `${moveY2}px`);
+        
+        const moveX3 = -60 + Math.random() * 120;
+        const moveY3 = -60 + Math.random() * 120;
+        firefly.style.setProperty('--x3', `${moveX3}px`);
+        firefly.style.setProperty('--y3', `${moveY3}px`);
+        
+        // Animation timing
+        const animDuration = 10 + Math.random() * 8;
+        firefly.style.animationDuration = `${animDuration}s`;
+        firefly.style.animationDelay = `${Math.random() * 8}s`;
+        
+        const pulseDuration = 0.8 + Math.random() * 1.5;
+        core.style.animationDuration = `${pulseDuration}s`;
+        glow.style.animationDuration = `${pulseDuration * (1.2 + Math.random() * 0.8)}s`;
+        
+        // Color (forest theme colors - greens and warm yellows)
+        const baseHue = Math.random() > 0.7 ? 120 + Math.random() * 40 : 45 + Math.random() * 30; 
+        const saturation = 70 + Math.random() * 30;
+        const lightness = 60 + Math.random() * 30;
+        
+        // Apply colors
+        firefly.style.boxShadow = `0 0 ${size * 5}px ${size * 4}px hsla(${baseHue}, ${saturation}%, ${lightness}%, ${0.12 + Math.random() * 0.15})`;
+        core.style.backgroundColor = `hsla(${baseHue}, ${saturation}%, ${lightness}%, ${0.5 + Math.random() * 0.3})`;
+        glow.style.backgroundColor = `hsla(${baseHue}, ${saturation-10}%, ${lightness+10}%, ${0.1 + Math.random() * 0.15})`;
+        
+        // Add to container
+        container.appendChild(firefly);
+        
+        // Remove some fireflies occasionally
+        setTimeout(() => {
+            if (Math.random() > 0.4 && container.contains(firefly)) {
+                firefly.style.opacity = 0;
+                setTimeout(() => {
+                    if (container.contains(firefly)) {
+                        container.removeChild(firefly);
+                    }
+                }, 2000);
+            }
+        }, animDuration * 1000);
+    }
 });
