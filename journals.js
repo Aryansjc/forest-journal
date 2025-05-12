@@ -189,12 +189,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 pages: []
             };
             currentJournalId = newId;
+            localStorage.setItem('forest_current_journal', newId);
             saveJournals();
-            newJournalInput.value = '';
-            updateJournalsList();
-            resetJournalUI();
-            journalTitle.textContent = newJournalName;
-            showNotification('New journal created successfully!');
+            
+            // Show brief notification before reload
+            const notification = document.createElement('div');
+            notification.className = 'save-confirmation';
+            notification.textContent = 'New journal created! Loading...';
+            document.body.appendChild(notification);
+            
+            // Reload the page after a short delay
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
         } else {
             alert('Please enter a journal name');
         }
